@@ -1,0 +1,1048 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #111;
+
+    font-family: Arial, sans-serif;
+
+    touch-action: none;
+}
+
+body {
+    overscroll-behavior: none;
+}
+
+button {
+
+    border: none;
+
+    font-family: Arial, sans-serif;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+}
+
+
+/* ================= START ================= */
+
+#startScreen {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            rgba(15,25,15,.6),
+            rgba(15,25,15,.6)
+        ),
+        #477545;
+}
+
+.startBox {
+
+    width: 620px;
+
+    max-width: 92%;
+
+    padding: 48px 40px;
+
+    text-align: center;
+
+    background:
+        rgba(8,12,8,.94);
+
+    border: 3px solid #d5b94c;
+
+    box-shadow:
+        0 0 50px rgba(0,0,0,.7);
+
+    position: relative;
+}
+
+.logo {
+
+    color: white;
+
+    font-size: 64px;
+
+    font-weight: 900;
+
+    letter-spacing: 9px;
+
+    margin-bottom: 8px;
+
+    text-shadow:
+        4px 4px 0 #222;
+}
+
+.subtitle {
+
+    color: #aaa;
+
+    font-size: 12px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 32px;
+}
+
+.mission {
+
+    color: #f1d765;
+
+    font-size: 20px;
+
+    line-height: 1.7;
+
+    font-weight: bold;
+
+    margin-bottom: 35px;
+}
+
+#startButton {
+
+    width: 280px;
+
+    max-width: 90%;
+
+    min-height: 60px;
+
+    padding: 16px 35px;
+
+    background: #d3b63f;
+
+    color: #111;
+
+    font-size: 20px;
+
+    transition: .15s;
+}
+
+#startButton:hover {
+
+    background: #f0d35d;
+
+    transform: scale(1.03);
+}
+
+#startButton:active {
+
+    transform: scale(.97);
+}
+
+.controls {
+
+    margin-top: 30px;
+
+    color: #aaa;
+
+    line-height: 1.65;
+
+    font-size: 12px;
+}
+
+.startWatermark {
+
+    margin-top: 25px;
+
+    color: rgba(255,255,255,.3);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+}
+
+
+/* ================= GAME ================= */
+
+#game {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+#gameCanvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    background: #69a85d;
+
+    image-rendering: pixelated;
+
+    touch-action: none;
+}
+
+
+/* ================= HUD ================= */
+
+#hud {
+
+    position: fixed;
+
+    top: 15px;
+
+    left: 15px;
+
+    z-index: 20;
+
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    max-width: calc(100vw - 30px);
+}
+
+.hudItem {
+
+    padding: 10px 13px;
+
+    background: rgba(0,0,0,.78);
+
+    color: white;
+
+    border-left: 3px solid #d4b53e;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    min-width: 75px;
+
+    text-align: center;
+}
+
+
+/* ================= OBJECTIVE ================= */
+
+#objective {
+
+    position: fixed;
+
+    top: 68px;
+
+    left: 15px;
+
+    z-index: 20;
+
+    max-width: calc(100vw - 30px);
+
+    padding: 10px 15px;
+
+    background: rgba(0,0,0,.72);
+
+    color: #f3d65c;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* ================= INTERACTION ================= */
+
+#interaction {
+
+    display: none;
+
+    position: fixed;
+
+    bottom: 40px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 30;
+
+    padding: 13px 24px;
+
+    background: rgba(0,0,0,.88);
+
+    color: white;
+
+    border: 2px solid #e1c44f;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* ================= MOBILE ================= */
+
+#mobileControls {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 80;
+
+    pointer-events: none;
+}
+
+
+/* JOYSTICK */
+
+#joystick {
+
+    position: absolute;
+
+    left: 24px;
+
+    bottom: 25px;
+
+    width: 150px;
+
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.08),
+            rgba(0,0,0,.3)
+        );
+
+    border: 3px solid rgba(255,255,255,.28);
+
+    pointer-events: auto;
+
+    touch-action: none;
+}
+
+#joystickOuter {
+
+    position: absolute;
+
+    inset: 18px;
+
+    border-radius: 50%;
+
+    border: 2px dashed rgba(255,255,255,.16);
+}
+
+#joystickStick {
+
+    position: absolute;
+
+    width: 66px;
+
+    height: 66px;
+
+    left: 39px;
+
+    top: 39px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #f4db69,
+            #b89b32
+        );
+
+    border: 3px solid rgba(255,255,255,.6);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.4);
+
+    pointer-events: none;
+}
+
+
+/* BUTTONS */
+
+#mobileButtons {
+
+    position: absolute;
+
+    right: 22px;
+
+    bottom: 23px;
+
+    display: grid;
+
+    grid-template-columns: 65px 85px;
+
+    grid-template-rows: 65px 65px;
+
+    gap: 10px;
+
+    pointer-events: auto;
+}
+
+.mobileButton {
+
+    border-radius: 50%;
+
+    color: white;
+
+    border: 3px solid rgba(255,255,255,.45);
+
+    background: rgba(0,0,0,.68);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.35);
+
+    font-size: 20px;
+
+    touch-action: none;
+
+    transition: transform .08s;
+}
+
+.mobileButton:active {
+
+    transform: scale(.9);
+}
+
+.mobileButton.shoot {
+
+    grid-column: 2;
+
+    grid-row: 1 / span 2;
+
+    width: 85px;
+
+    height: 85px;
+
+    align-self: center;
+
+    background: rgba(145,35,35,.9);
+
+    font-size: 34px;
+}
+
+.mobileButton.interact {
+
+    grid-column: 1;
+
+    grid-row: 1;
+
+    background: rgba(210,180,60,.9);
+
+    color: #111;
+}
+
+.mobileButton.reload {
+
+    grid-column: 1;
+
+    grid-row: 2;
+
+    background: rgba(60,60,60,.85);
+}
+
+
+/* ================= HOUSE ================= */
+
+#houseInterior {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 15px;
+
+    background: rgba(0,0,0,.78);
+}
+
+.interiorBox {
+
+    width: 850px;
+
+    max-width: 96%;
+
+    max-height: 96vh;
+
+    overflow: auto;
+
+    padding: 25px;
+
+    background: #191919;
+
+    border: 3px solid #c8aa48;
+
+    text-align: center;
+}
+
+#interiorNumber {
+
+    color: #e3c44e;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
+}
+
+.room {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 420px;
+
+    overflow: hidden;
+
+    background: #8b735c;
+
+    border: 5px solid #392d24;
+}
+
+.wall {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            #8d765d 0px,
+            #8d765d 35px,
+            #80694f 36px,
+            #80694f 38px
+        );
+}
+
+.window {
+
+    position: absolute;
+
+    top: 50px;
+
+    left: 80px;
+
+    width: 150px;
+
+    height: 110px;
+
+    background: #456a7b;
+
+    border: 12px solid #513d2c;
+}
+
+.window div {
+
+    position: absolute;
+
+    background: #513d2c;
+}
+
+.window div:first-child {
+
+    width: 8px;
+
+    height: 100%;
+
+    left: 50%;
+}
+
+.window div:last-child {
+
+    width: 100%;
+
+    height: 8px;
+
+    top: 50%;
+}
+
+.table {
+
+    position: absolute;
+
+    bottom: 75px;
+
+    left: 320px;
+
+    width: 260px;
+
+    height: 30px;
+}
+
+.tableTop {
+
+    width: 100%;
+
+    height: 30px;
+
+    background: #513222;
+}
+
+.tableLeg {
+
+    position: absolute;
+
+    top: 30px;
+
+    left: 25px;
+
+    width: 25px;
+
+    height: 100px;
+
+    background: #392419;
+}
+
+.tableLeg.second {
+
+    left: 210px;
+}
+
+.cabinet {
+
+    position: absolute;
+
+    right: 70px;
+
+    bottom: 70px;
+
+    width: 140px;
+
+    height: 180px;
+
+    background: #513222;
+
+    border: 8px solid #362218;
+}
+
+.cabinet div {
+
+    height: 50%;
+
+    border-bottom: 5px solid #362218;
+}
+
+.note {
+
+    position: absolute;
+
+    left: 430px;
+
+    bottom: 112px;
+
+    width: 40px;
+
+    height: 35px;
+
+    background: #eee4bb;
+
+    color: #111;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    padding-top: 3px;
+}
+
+.door {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 20px;
+
+    width: 90px;
+
+    height: 180px;
+
+    background: #422a1d;
+
+    border: 8px solid #2c1c14;
+}
+
+#interiorText {
+
+    color: white;
+
+    margin: 18px 0;
+}
+
+.interiorButtons button {
+
+    min-height: 50px;
+
+    padding: 13px 22px;
+
+    margin: 5px;
+
+    background: #d2b54a;
+
+    color: #111;
+}
+
+#leaveHouse {
+
+    background: #777;
+
+    color: white;
+}
+
+
+/* ================= PANELS ================= */
+
+#cluePanel,
+#bossPanel,
+#endingPanel {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 300;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0,0,0,.82);
+}
+
+.clueBox,
+.bossBox,
+.endingBox {
+
+    width: 600px;
+
+    max-width: 95%;
+
+    padding: 35px 30px;
+
+    text-align: center;
+
+    background: #171717;
+
+    border: 3px solid #d1b344;
+
+    color: white;
+
+    box-shadow:
+        0 0 35px rgba(0,0,0,.7);
+}
+
+.clueBox h2,
+.bossBox h1,
+.endingBox h1 {
+
+    color: #e2c24d;
+
+    margin-bottom: 20px;
+}
+
+.clueIcon,
+.factoryIcon,
+.endingIcon {
+
+    font-size: 45px;
+
+    margin-bottom: 15px;
+}
+
+.clueBox p,
+.bossBox p,
+.endingBox p {
+
+    line-height: 1.7;
+
+    margin-bottom: 25px;
+}
+
+.clueBox button,
+.bossBox button,
+.endingBox button {
+
+    min-height: 52px;
+
+    padding: 13px 30px;
+
+    background: #d2b54a;
+
+    color: #111;
+}
+
+
+/* ================= WATERMARK ================= */
+
+#watermark {
+
+    position: fixed;
+
+    right: 15px;
+
+    bottom: 10px;
+
+    z-index: 50;
+
+    color: rgba(255,255,255,.45);
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+/* ================= TOUCH DEVICES ================= */
+
+@media (pointer: coarse) {
+
+    #mobileControls {
+        display: block;
+    }
+
+    #interaction {
+        bottom: 185px;
+    }
+}
+
+
+/* ================= PHONE ================= */
+
+@media (max-width: 700px) {
+
+    .startBox {
+
+        padding: 30px 18px;
+    }
+
+    .logo {
+
+        font-size: 38px;
+
+        letter-spacing: 5px;
+    }
+
+    .subtitle {
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+    }
+
+    .mission {
+
+        font-size: 15px;
+
+        line-height: 1.5;
+    }
+
+    .controls {
+
+        font-size: 10px;
+    }
+
+    #hud {
+
+        top: 8px;
+
+        left: 8px;
+
+        gap: 5px;
+    }
+
+    .hudItem {
+
+        min-width: 60px;
+
+        padding: 8px 7px;
+
+        font-size: 10px;
+    }
+
+    #objective {
+
+        top: 58px;
+
+        left: 8px;
+
+        font-size: 10px;
+
+        padding: 8px 10px;
+    }
+
+    .interiorBox {
+
+        padding: 13px;
+    }
+
+    .room {
+
+        height: 300px;
+    }
+
+    .window {
+
+        left: 25px;
+
+        transform: scale(.7);
+
+        transform-origin: top left;
+    }
+
+    .table {
+
+        left: 42%;
+
+        transform: scale(.65);
+
+        transform-origin: bottom left;
+    }
+
+    .cabinet {
+
+        right: 15px;
+
+        transform: scale(.65);
+
+        transform-origin: bottom right;
+    }
+
+    .note {
+
+        left: 52%;
+
+        transform: scale(.8);
+    }
+
+    .clueBox,
+    .bossBox,
+    .endingBox {
+
+        padding: 25px 18px;
+    }
+}
+
+
+/* ================= LANDSCAPE PHONE ================= */
+
+@media (max-height: 520px) and (orientation: landscape) {
+
+    #joystick {
+
+        width: 110px;
+
+        height: 110px;
+
+        left: 15px;
+
+        bottom: 12px;
+    }
+
+    #joystickOuter {
+
+        inset: 14px;
+    }
+
+    #joystickStick {
+
+        width: 50px;
+
+        height: 50px;
+
+        left: 27px;
+
+        top: 27px;
+    }
+
+    #mobileButtons {
+
+        right: 15px;
+
+        bottom: 10px;
+
+        grid-template-columns: 55px 70px;
+
+        grid-template-rows: 55px 55px;
+    }
+
+    .mobileButton.interact,
+    .mobileButton.reload {
+
+        width: 55px;
+
+        height: 55px;
+    }
+
+    .mobileButton.shoot {
+
+        width: 70px;
+
+        height: 70px;
+    }
+
+    #interaction {
+
+        bottom: 125px;
+    }
+
+    #objective {
+
+        top: 55px;
+    }
+}
